@@ -7,6 +7,7 @@ Welcome to the **Identity Test API**! This project is built with **ASP.NET Core*
 ✅ **User Registration & Login** 🔐
 - Users can register with an email and password.
 - Secure authentication using **ASP.NET Identity**.
+- JWT Token-based Authentication implemented and tested. 🛡️
 
 ✅ **Role Management** 🎭
 - Create new roles dynamically.
@@ -17,6 +18,7 @@ Welcome to the **Identity Test API**! This project is built with **ASP.NET Core*
 - Strong password policies enforced.
 - Secure authentication and authorization mechanisms.
 - HTTPS support enabled.
+- JWT Token Authentication tested successfully. ✅
 
 ✅ **API Endpoints** 📡
 - User Management
@@ -50,6 +52,11 @@ cd identity-test-api
 ```json
 "ConnectionStrings": {
   "Default": "Server=LAPTOP-IOOHI3VQ\\SQLEXPRESS;Database=YOUR_DB;Trusted_Connection=True;"
+},
+"Jwt": {
+  "Key": "your_super_long_secret_key_123456hgfffthfhtfhfhfhfhfhfhfhfhfhtfhyfhtfh!",
+  "Issuer": "http://localhost:7044",
+  "Audience": "http://localhost:7044"
 }
 ```
 
@@ -86,10 +93,17 @@ http://localhost:5154/swagger
 | `POST` | `/api/Accounts/addtorole` | Assign a role to a user |
 | `GET` | `/api/Accounts/userroles/{userId}` | Get roles of a user |
 
+### **Protected Test Endpoint 🔒** 
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| `GET` | `/api/Test/test` | Requires authentication|
+
+
 ---
 
 ## Security & Best Practices 🔒
 - **Password Policy:** Enforced strong password rules.
+- **JWT Authentication:** Implemented and tested successfully.
 - **CORS Configuration:** Ensure secure API access.
 - **HTTPS Support:** Always run on HTTPS for security.
 
