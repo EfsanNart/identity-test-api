@@ -13,11 +13,13 @@ namespace identity_test_api.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AccountsController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
+        private readonly IConfiguration _configuration;
+        public AccountsController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager,IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _configuration = configuration;
         }
         [HttpPost("register")]
 
@@ -56,7 +58,8 @@ namespace identity_test_api.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return Ok(new { message = "Giriş Başarılı" });
+                    var token = Helper.GenerateJwtToken(model.Email, _configuration);
+                    return Ok(new { message = "Giriş Başarılı",token = token  });
                 }
                 else
                 {
